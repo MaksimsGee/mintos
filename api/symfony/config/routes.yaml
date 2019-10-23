@@ -1,3 +1,11 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+api_login:
+    path: /api/login
+    methods: [POST]
+
+api_register:
+    path: /api/register
+    methods: [POST]
+
+api:
+    prefix: /api
+    resource: '../src/Controller'
