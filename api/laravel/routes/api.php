@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +11,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login', 'UserController@authenticate');
+Route::post('register', 'UserController@register');
+
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('excludes', 'AppController@excludes');
+    Route::get('feed', 'AppController@feed');
 });
+
+// fallback if end-point not found
+Route::any('/', 'AppController@notFound'); // usually this section respond something as well
+Route::any('{route}', 'AppController@notFound')->where('route', '(.*)?');

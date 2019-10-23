@@ -21,6 +21,17 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+
+            // align with symphony framework
+            $table->string('username')->nullable();
+            $table->string('username_canonical')->nullable();
+            $table->string('email_canonical')->nullable();
+            $table->integer('enabled')->default(1);
+            $table->string('salt')->nullable();
+            $table->timestamp('last_login')->nullable();
+            $table->string('confirmation_token')->nullable();
+            $table->timestamp('password_requested_at')->nullable();
+            $table->string('roles')->nullable();
         });
     }
 
