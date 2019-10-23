@@ -54,13 +54,17 @@ exports.cssLoaders = function (options) {
     }
   }
 
+  const sassPrepend = `
+    
+  `;
+
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
-    scss: generateLoaders('sass'),
+    sass: generateLoaders('sass', { indentedSyntax: true, data: sassPrepend }),
+    scss: generateLoaders('sass', { data: sassPrepend }),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')
   }

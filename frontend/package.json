@@ -1,18 +1,32 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "mints.com - home task",
   "author": "MaksimsGe <maksimsge@gmail.com>",
-  "private": true,
+  "private": false,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 0.0.0.0",
     "lint": "eslint --ext .js,.vue src",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "docker-dev": "yarn && yarn dev"
   },
   "dependencies": {
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.4",
+    "cross-env": "^6.0.3",
+    "cxlt-vue2-toastr": "^1.1.1",
+    "debug": "^4.1.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "node-sass": "^4.12.0",
+    "pug": "^2.0.4",
+    "pug-plain-loader": "^1.0.0",
+    "qs": "^6.9.0",
+    "sass-loader": "^6.0.3",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-inject": "^2.1.1",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
