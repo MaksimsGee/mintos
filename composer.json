@@ -1,0 +1,45 @@
+{
+    "name": "MaksimsGee/mintos",
+    "description": "mintos.com vacancy",
+    "authors": [
+        {
+            "name": "Maksims Gerasimovs",
+            "email": "maksimsge@gmail.com",
+            "homepage": "https://www.facebook.com/maksims.gerasimovs",
+            "role": "Full stack developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.2",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "ext-json": "*",
+        "ext-simplexml": "*",
+        "wikimedia/composer-merge-plugin": "dev-master"
+    },
+    "autoload-dev": {
+        "psr-4": {
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "echo '' > ./docker/.composer-installed"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
+    "extra": {
+        "merge-plugin": {
+            "include": [
+                "api/*/composer.json"
+            ],
+            "recurse": true,
+            "replace": true,
+            "merge-dev": false
+        }
+    }
+}
