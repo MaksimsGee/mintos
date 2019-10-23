@@ -28,5 +28,31 @@ Your task is to create simple RSS reader web application.
 * Clone repository 
   * [git@github.com:MaksimsGee/mintos.git](https://github.com/MaksimsGee/mintos) 
 * Run command to setup infrastructure: `docker-compose up --build`
+* Access point
+  * Frontend: http://127.0.0.1:3000/
+  * API: http://127.0.0.1:9000/api
 
+&nbsp;
+&nbsp;
+
+
+##### Additional settings
+
+* Available three different server sides(API)
+  * Laravel 6.* (default) -> http://127.0.0.1:9000/api
+  * Symfony 4.* -> http://127.0.0.1:9001/api
+  * Yii2 -> http://127.0.0.1:9002/api | `API not finished due to lack of time`
+
+To launch app with different API add `${API_URL}`(dont forget to specify full path `/api`) in docker-compose command
+
+Command sample: `API_URL=http://127.0.0.1:9001/api docker-composer up --build`  
+
+To re-run migrations following file should be removed from your local machine `$PWD/docker/.builded`
+
+Command sample: `rm $PWD/docker/.builded`
+
+&nbsp;
+&nbsp;
+
+**Coded by [Maksims Gerasimovs](https://github.com/MaksimsGee)**\
 **Powered by [mintos.com](https://www.mintos.com/en/)** 
