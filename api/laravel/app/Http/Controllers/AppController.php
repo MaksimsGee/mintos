@@ -13,7 +13,7 @@ class AppController extends BaseController
     use DispatchesJobs, ValidatesRequests;
 
     /** @var string */
-    protected $feed = 'https://www.theregister.co.uk/software/headlines.atom';
+    protected $feedUrl = 'https://www.theregister.co.uk/software/headlines.atom';
 
     /**
      * @param AppRequest $request
@@ -32,9 +32,10 @@ class AppController extends BaseController
      */
     public function feed(AppRequest $request)
     {
-        $feed = simplexml_load_string(file_get_contents($this->feed));
+        $feedPlain = file_get_contents($this->feedUrl);
+        $feedParsed = simplexml_load_string($feedPlain);
 
-        return response()->json($feed);
+        return response()->json(['feed' => $feedParsed, 'plain' => $feedPlain]);
     }
 
     /**

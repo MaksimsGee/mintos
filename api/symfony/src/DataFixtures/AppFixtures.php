@@ -19,9 +19,19 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        $excludes = $manager
+            ->getRepository(Excludes::class)
+            ->findAll();
+
+        if (!empty($excludes)) {
+            return;
+        }
+
         foreach ($this->words as $word) {
             $exclude = new Excludes();
             $exclude->setName($word);
+            $exclude->setCreatedAt(new \DateTime());
+            $exclude->setUpdatedAt(new \DateTime());
 
             $manager->persist($exclude);
         }

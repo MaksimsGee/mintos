@@ -54,6 +54,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-dbpass}
       API_URL: ${API_URL:-http://127.0.0.1:9000/api}
       API_ENV: ${APP_ENV:-dev}
+      FORCE_FRESH: ${FORCE_FRESH:-true}
     volumes:
       - .:/srv/www
     command: "sh /srv/www/docker/init.sh"

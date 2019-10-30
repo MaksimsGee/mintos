@@ -45,16 +45,17 @@ chmod -R 777 /srv/www/api/laravel/storage
 chmod -R 777 /srv/www/api/laravel/bootstrap/cache
 chmod -R 777 /srv/www/api/symfony/var
 chmod -R 755 /srv/www/api/symfony/config/jwt
-chmod -R 777 /srv/www/api/yii2/runtime
+# yii2 not implemented
+#chmod -R 777 /srv/www/api/yii2/runtime
 
 FILE=/srv/www/docker/.builded
 
-if [ ! -f "$FILE" ];then
+if [ ! -f "$FILE" ] || [ "${FORCE_FRESH}" = "true" ];then
 
     if [ "${API_URL}" = "http://127.0.0.1:9000/api" ];then
         echo "laravel"
 
-        echo "Running migration..."
+        echo "Running fresh migrations and seed data..."
         cd /srv/www/api/laravel && APP_ENV=${API_ENV} php artisan migrate:refresh --seed
 
         echo "Symlink linking storage..."
@@ -66,8 +67,14 @@ if [ ! -f "$FILE" ];then
     if [ "${API_URL}" = "http://127.0.0.1:9001/api" ];then
       echo "symfony"
 
+      echo "Clean database..."
+      cd /srv/www/api/symfony && yes | APP_ENV=${API_ENV} php bin/console doctrine:migrations:migrate first
+
       echo "Running migration..."
       cd /srv/www/api/symfony && APP_ENV=${API_ENV} php bin/console doctrine:migrations:migrate
+
+      echo "Seed database..."
+      cd /srv/www/api/symfony && APP_ENV=${API_ENV} php bin/console doctrine:fixtures:load
 
       echo "" > $FILE
     fi

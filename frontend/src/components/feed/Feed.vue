@@ -1,14 +1,16 @@
 <template lang="pug">
   div(:class='$style.root')
     div.col-12(v-if="feed.length")
-      div.col-12.text-center.pb-4(v-if="mostOccurrenceWords.length")
+      div.col-12.text-center.pb-5(v-if="mostOccurrenceWords.length")
+        h4.pb-3 Most occurrence words in feed
+          div.small.text-muted excluding top 50 english common words
         template(v-for="word in mostOccurrenceWords")
           b-button.m-1(variant="primary",size="sm")
             | {{ word.name }}
             |
             b-badge(variant="light") {{ word.count }}
       div.col-12.text-center.pb-5(v-else)
-        h4 Calculating most occurrence words from feed.summary
+        h4 Calculating most occurrence words from feed
       div.col-8.offset-2
         div.col-12.text-center.pb-4
           h4 {{ title }}

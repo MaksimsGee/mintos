@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ExcludesRepository")
  */
-class Excludes
+class Excludes implements \JsonSerializable
 {
     /**
      * @ORM\Id()
@@ -91,5 +91,18 @@ class Excludes
     {
         $this->createdAt = $createdAt;
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'created_at' => $this->createdAt->format(\DateTime::RFC3339),
+            'updated_at' => $this->updatedAt->format(\DateTime::RFC3339),
+        ];
     }
 }

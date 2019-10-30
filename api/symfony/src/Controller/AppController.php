@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppController extends AbstractController
 {
     /** @var string */
-    protected $feed = 'https://www.theregister.co.uk/software/headlines.atom';
+    protected $feedUrl = 'https://www.theregister.co.uk/software/headlines.atom';
 
     /**
      * @Route("/excludes", name="excludes",  methods={"GET"})
@@ -33,8 +33,9 @@ class AppController extends AbstractController
      */
     public function feed(Request $request)
     {
-        $feed = simplexml_load_string(file_get_contents($this->feed));
+        $feedPlain = file_get_contents($this->feedUrl);
+        $feedParsed = simplexml_load_string($feedPlain);
 
-        return new JsonResponse($feed, 200);
+        return new JsonResponse(['feed' => $feedParsed, 'plain' => $feedPlain], 200);
     }
 }

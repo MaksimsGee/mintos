@@ -11,6 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        if (!\App\Excludes::all()->isEmpty()) {
+            return;
+        }
+
         factory(\App\Excludes::class, 50)->create();
     }
 }

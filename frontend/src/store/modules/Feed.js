@@ -8,11 +8,12 @@ const actions = {
     if (!state.feed.length) {
       return get('feed')
         .then(res => {
-          commit('SET_STATE', { key: 'feed', data: res.entry });
-          commit('SET_STATE', { key: 'author', data: res.author });
-          commit('SET_STATE', { key: 'logo', data: res.logo });
-          commit('SET_STATE', { key: 'title', data: res.title });
-          commit('SET_STATE', { key: 'subtitle', data: res.subtitle });
+          commit('SET_STATE', { key: 'feed', data: res.feed.entry });
+          commit('SET_STATE', { key: 'author', data: res.feed.author });
+          commit('SET_STATE', { key: 'logo', data: res.feed.logo });
+          commit('SET_STATE', { key: 'title', data: res.feed.title });
+          commit('SET_STATE', { key: 'subtitle', data: res.feed.subtitle });
+          commit('SET_STATE', { key: 'plain', data: res.plain });
 
           return res;
         })
@@ -35,6 +36,7 @@ export default {
     logo: '',
     title: '',
     subtitle: '',
+    plain: '',
   },
   getters: {
     feed: s => s.feed,
@@ -42,6 +44,7 @@ export default {
     logo: s => s.logo,
     title: s => s.title,
     subtitle: s => s.subtitle,
+    plain: s => s.plain,
   },
   mutations,
   actions,

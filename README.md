@@ -54,5 +54,10 @@ Command sample: `rm $PWD/docker/.builded`
 &nbsp;
 &nbsp;
 
+`*** if ${FORCE_FRESH:-false} session and user is not shared between API as each framework has it own encryption/hashing for jwt token/password, so when you switch api you need to logout/register/login`
+
+&nbsp;
+&nbsp;
+
 **Coded by [Maksims Gerasimovs](https://github.com/MaksimsGee)**\
 **Powered by [mintos.com](https://www.mintos.com/en/)** 

@@ -2,6 +2,7 @@ import Debug from 'debug';
 import moment from 'moment';
 import _ from 'lodash';
 import { mapActions, mapGetters } from 'vuex';
+import { decodeXML } from 'entities';
 
 const debug = Debug('component:feed'); // eslint-disable-line
 
@@ -12,12 +13,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('Feed',[
+    ...mapGetters('Feed', [
       'feed',
+      'plain',
       'title',
       'subtitle',
     ]),
-    ...mapGetters('Excludes',[
+    ...mapGetters('Excludes', [
       'excludes',
     ]),
   },
@@ -35,26 +37,21 @@ export default {
       return _.get(linkObj, '@attributes.href', '');
     },
     getMostOccurrenceWords(limit = 10) {
-      let words = [];
       const result = [];
       const schema = {};
-      this.feed.forEach(arr => {
-        words =_.concat(words, arr.summary
-          .replace(/<[^>]*>?/gm, '')
-          .replace(/–/g, '')
-          .replace(/[0-9]/g, '')
-          .split(' ')
-          .filter(word => !this.excludes.has(word.toLowerCase()) && !_.isEmpty(word) && !_.isNumber(word)));
-      });
-      words.forEach(i => schema[i] = (schema[i]||0) + 1);
+      const words = decodeXML(this.plain)
+        .replace(/<[^>]*>?/gm, '')
+        .replace(/[0-9]|\s{2,}|,/g, '')
+        .toLowerCase()
+        .split(' ')
+        .filter(el => el.length > 1 && !this.excludes.has(el));
 
-      (Object.keys(schema).sort((a,b) => schema[b]-schema[a]))
+      words.forEach(i => schema[i] = (schema[i] || 0) + 1);
+
+      (Object.keys(schema).sort((a, b) => schema[b] - schema[a]))
         .some((el, index) => {
           result.push({ name: el, count: schema[el] });
-          if (limit > index+1) {
-            return false;
-          }
-          return true;
+          return limit <= index + 1;
         });
 
       return result;

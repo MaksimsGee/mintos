@@ -14,6 +14,10 @@ class Excludes extends Migration
      */
     public function up()
     {
+        if (Schema::hasTable((new ModelExclude())->getTable())) {
+            return;
+        }
+
         Schema::create((new ModelExclude())->getTable(), function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
